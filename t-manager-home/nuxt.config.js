@@ -1,7 +1,10 @@
-import i18n from "./plugins/i18n";
+import i18n from './plugins/i18n'
 
 module.exports = {
   mode: 'universal',
+  router: {
+    base: '/web/'
+  },
   /*
   ** Headers of the page
   */
@@ -17,7 +20,7 @@ module.exports = {
       { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Material+Icons' }
     ]
   },
-  plugins: ['~/plugins/i18n', { src: '~/plugins/vueTyper', ssr: false}],
+  plugins: ['~/plugins/i18n', { src: '~/plugins/vueTyper', ssr: false }],
   /*
   ** Customize the progress bar color
   */
@@ -26,7 +29,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    extractCSS: true,/*
+    extractCSS: true/*
     extend (config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
@@ -40,23 +43,23 @@ module.exports = {
           }
         })
       }
-    }*/
+    } */
   },
-  buildModules:['@nuxtjs/vuetify'],
-    vuetify: {
-        icons: {
-            iconfont: "mdi"
-        },
-        theme: {
-            dark: false,
-            options: {
-              customProperties: true
-            }
-        },
-        lang: {
-            t: (key, ...params) => {
-              return i18n.t(key, params)
-            }
-        }
+  buildModules: ['@nuxtjs/vuetify'],
+  vuetify: {
+    icons: {
+      iconfont: 'mdi'
+    },
+    theme: {
+      dark: false,
+      options: {
+        customProperties: true
+      }
+    },
+    lang: {
+      t: (key, ...params) => {
+        return i18n.t(key, params)
+      }
     }
+  }
 }
