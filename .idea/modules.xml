@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/module-home.iml" filepath="$PROJECT_DIR$/module-home.iml" />
+      <module fileurl="file://$PROJECT_DIR$/t-manager-home/t-manager-home.iml" filepath="$PROJECT_DIR$/t-manager-home/t-manager-home.iml" />
     </modules>
   </component>
 </project>
