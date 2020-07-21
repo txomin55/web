@@ -9,11 +9,13 @@ module.exports = {
   ** Headers of the page
   */
   head: {
-    title: 'home',
+    title: 'txomins',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: 'Nuxt.js + Vuetify.js project' }
+      { hid: 'author', name: 'author', content: 'Txomin Sirera Ibarluzea' },
+      { hid: 'description', name: 'description', content: 'Página personal de Txomin Sirera Ibarluzea, aprende a programar, mira las pruebas de concepto que tengo y si necesitas una web con WORDPRESS te la hago enseguida.' },
+      { hid: 'keywords', name: 'keywords', content: 'Programar, Coruña, Aprender, Página web' }
     ],
     link: [
       { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
@@ -29,7 +31,7 @@ module.exports = {
   ** Build configuration
   */
   build: {
-    extractCSS: true/*
+    extractCSS: true,
     extend (config, ctx) {
       // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
@@ -38,12 +40,12 @@ module.exports = {
           test: /\.(js|vue)$/,
           loader: 'eslint-loader',
           exclude: /(node_modules)/,
-          options : {
-            fix : true
+          options: {
+            fix: true
           }
         })
       }
-    } */
+    }
   },
   buildModules: ['@nuxtjs/vuetify'],
   vuetify: {

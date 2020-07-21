@@ -11,7 +11,14 @@
                     <span>{{item.time}}</span>
                     <span v-if="item.label" :class="item.type">{{item.label}}</span>
 
-                <pre class="cmd" v-if="!item.message.list">{{item.message}}</pre>
+                <span class="cmd" v-if="!item.message.list">
+                    <template v-if="!item.html">
+                        <pre>{{item.message}}</pre>
+                    </template>
+                    <template v-else>
+                        <pre v-html="item.message"></pre>
+                    </template>
+                </span>
 
                 <span class="cmd" v-else>
                     <pre>{{item.message.text}}</pre>
@@ -52,183 +59,183 @@
 </template>
 <script>
     export default {
-        name: 'VueTerminal',
-        data() {
-            return {
-                messageList: [],
-                actionResult: '',
-                lastLineContent: '...',
-                inputCommand: '',
-                supportingCommandList: '',
-                historyIndex: 0,
-                commandHistory: []
-            };
-        },
-        props: {
-            commandList: {
-                required: false,
-                default: () => ({})
-            },
-            taskList: {
-                required: false,
-                default: () => ({})
-            },
-            title: {
-                required: false,
-                type: String,
-                default: 'vTerminal'
-            },
-            greeting: {
-                required: false,
-                type: String,
-                default: undefined
-            },
-            defaultTaskCommandd: {
-                required: false,
-                type: String,
-                default: 'init vTerminal'
-            },
-            defaultTask: {
-                required: false,
-                type: String,
-                default: undefined
-            },
-            prompt: {
-                required: false,
-                default: undefined
-            },
-            showHelpMessage: {
-                required: false,
-                default: true
-            },
-            unknownCommandMessage: {
-                required: false,
-                default: undefined
-            }
-        },
-        computed: {
-            lastLineClass() {
-                if (this.lastLineContent === '&nbsp') {
-                    return 'cursor'
-                } else if (this.lastLineContent === '...') {
-                    return 'loading'
-                }
-            }
-        },
-        created() {
-            this.supportingCommandList = Object.keys(this.commandList).concat(Object.keys(this.taskList))
-        },
-        async mounted() {
-            if (this.defaultTask) {
-                await this.handleRun(this.defaultTask)
-            }
-            if (this.showHelpMessage) {
-                this.pushToList({ level: 'System', message: 'Type "help" to get a supporting command list.' })
-            }
-            this.lastLineContent = '&nbsp'
-            this.handleFocus()
-        },
-        methods: {
-            handleFocus() {
-                this.$refs.inputBox.focus();
-            },
-            handleCommand(e) {
-                if (e.keyCode !== 13) {
-                    this.handlekeyEvent(e)
-                    return
-                }
-                this.commandHistory.push(this.inputCommand)
-                this.historyIndex = this.commandHistory.length
-                if (typeof this.prompt !== 'undefined') {
-                    this.pushToList({ message: `${this.prompt} ${this.inputCommand} ` })
-                } else {
-                    this.pushToList({ message: `$ \\${this.title} ${this.inputCommand} ` })
-                }
-                if (!this.inputCommand) return;
-                const commandArr = this.inputCommand.split(' ')
-                if (commandArr[0] === 'help') {
-                    this.printHelp(commandArr[1])
-                }else if (commandArr[0] === 'clear') {
-                    this.clearList()
-                } else if (this.commandList[this.inputCommand]) {
-                    this.commandList[this.inputCommand].messages.map(item => this.pushToList(item))
-                } else if (this.taskList[this.inputCommand.split(' ')[0]]) {
-                    this.handleRun(this.inputCommand.split(' ')[0], this.inputCommand)
-                } else {
-                    if (this.unknownCommandMessage) {
-                        this.pushToList(this.unknownCommandMessage)
-                    } else {
-                        this.pushToList({ level: 'System', message: '--Unknown Command.' })
-                        this.pushToList({ level: 'System', message: '--type "help" to get a supporting command list.' })
-                    }
-                }
-                this.inputCommand = ''
-                this.autoScroll()
-                this.handleFocus()
-            },
-            handlekeyEvent(e) {
-                switch (e.keyCode) {
-                    case 38:
-                        this.historyIndex = this.historyIndex === 0 ? 0 : this.historyIndex - 1
-                        this.inputCommand = this.commandHistory[this.historyIndex]
-                        break;
-                    case 40:
-                        this.historyIndex = this.historyIndex === this.commandHistory.length ? this.commandHistory.length : this.historyIndex + 1
-                        this.inputCommand = this.commandHistory[this.historyIndex]
-                        break;
-                    default:
-                        break;
-                }
-            },
-            handleRun(taskName, input) {
-                if (!this.taskList[taskName] || !this.taskList[taskName][taskName]) return Promise.resolve()
-                this.lastLineContent = '...'
-                return this.taskList[taskName][taskName](this.pushToList, input).then(done => {
-                    this.pushToList(done)
-                    this.lastLineContent = '&nbsp'
-                }).catch(error => {
-                    this.pushToList(error || { type: 'error', label: 'Error', message: 'Something went wrong!' })
-                    this.lastLineContent = '&nbsp'
-                })
-            },
-            pushToList(message) {
-                this.messageList.push(message)
-                this.autoScroll()
-            },
-            clearList(){
-                this.messageList = []
-                this.autoScroll()
-            },
-            printHelp(input) {
-                if (!input) {
-                    this.pushToList({ message: '--Here is a list of supporting command.' })
-                    this.supportingCommandList.map(command => {
-                        if (this.commandList[command]) {
-                            this.pushToList({ type: 'success', label: command, message: '---> ' + this.commandList[command].description })
-                        } else {
-                            this.pushToList({ type: 'success', label: command, message: '---> ' + this.taskList[command].description })
-                        }
-                        return undefined
-                    })
-                    this.pushToList({ message: '--Enter help <command> to get help for a particular command.' })
-                } else {
-                    const command = this.commandList[input] || this.taskList[input]
-                    this.pushToList({ message: command.description })
-                }
-                this.autoScroll()
-            },
-            time() {
-                return new Date().toLocaleTimeString().split('').splice(2).join('')
-            },
-            autoScroll() {
-                window.scrollTo(0, this.$refs.terminalLastLine.offsetTop);
-                const that = this;
-                setTimeout(() => {
-                    that.handleFocus()
-                }, 500)
-            }
+      name: 'VueTerminal',
+      data () {
+        return {
+          messageList: [],
+          actionResult: '',
+          lastLineContent: '...',
+          inputCommand: '',
+          supportingCommandList: '',
+          historyIndex: 0,
+          commandHistory: []
         }
-    };
+  },
+      props: {
+        commandList: {
+          required: false,
+          default: () => ({})
+        },
+        taskList: {
+          required: false,
+          default: () => ({})
+        },
+        title: {
+          required: false,
+          type: String,
+          default: 'vTerminal'
+        },
+        greeting: {
+          required: false,
+          type: String,
+          default: undefined
+        },
+        defaultTaskCommandd: {
+          required: false,
+          type: String,
+          default: 'init vTerminal'
+        },
+        defaultTask: {
+          required: false,
+          type: String,
+          default: undefined
+        },
+        prompt: {
+          required: false,
+          default: undefined
+        },
+        showHelpMessage: {
+          required: false,
+          default: true
+        },
+        unknownCommandMessage: {
+          required: false,
+          default: undefined
+        }
+      },
+      computed: {
+        lastLineClass () {
+          if (this.lastLineContent === '&nbsp') {
+            return 'cursor'
+          } else if (this.lastLineContent === '...') {
+            return 'loading'
+          }
+        }
+      },
+      created () {
+        this.supportingCommandList = Object.keys(this.commandList).concat(Object.keys(this.taskList))
+      },
+      async mounted () {
+        if (this.defaultTask) {
+          await this.handleRun(this.defaultTask)
+        }
+        if (this.showHelpMessage) {
+          this.pushToList({ level: 'System', message: this.$i18n.t('home.terminal.help') })
+        }
+        this.lastLineContent = '&nbsp'
+        this.handleFocus()
+      },
+      methods: {
+        handleFocus () {
+          this.$refs.inputBox.focus()
+        },
+        handleCommand (e) {
+          if (e.keyCode !== 13) {
+            this.handlekeyEvent(e)
+            return
+          }
+          this.commandHistory.push(this.inputCommand)
+          this.historyIndex = this.commandHistory.length
+          if (typeof this.prompt !== 'undefined') {
+            this.pushToList({ message: `${this.prompt} ${this.inputCommand} ` })
+          } else {
+            this.pushToList({ message: `$ \\${this.title} ${this.inputCommand} ` })
+          }
+          if (!this.inputCommand) return
+          const commandArr = this.inputCommand.split(' ')
+          if (commandArr[0] === 'help') {
+            this.printHelp(commandArr[1])
+          } else if (commandArr[0] === 'clear') {
+            this.clearList()
+          } else if (this.commandList[this.inputCommand]) {
+            this.commandList[this.inputCommand].messages.map(item => this.pushToList(item))
+          } else if (this.taskList[this.inputCommand.split(' ')[0]]) {
+            this.handleRun(this.inputCommand.split(' ')[0], this.inputCommand)
+          } else {
+            if (this.unknownCommandMessage) {
+              this.pushToList(this.unknownCommandMessage)
+            } else {
+              this.pushToList({ level: 'System', message: this.$i18n.t('home.terminal.commandNotRecognized') })
+              this.pushToList({ level: 'System', message: this.$i18n.t('home.terminal.help') })
+            }
+          }
+          this.inputCommand = ''
+          this.autoScroll()
+          this.handleFocus()
+        },
+        handlekeyEvent (e) {
+          switch (e.keyCode) {
+            case 38:
+              this.historyIndex = this.historyIndex === 0 ? 0 : this.historyIndex - 1
+              this.inputCommand = this.commandHistory[this.historyIndex]
+              break
+            case 40:
+              this.historyIndex = this.historyIndex === this.commandHistory.length ? this.commandHistory.length : this.historyIndex + 1
+              this.inputCommand = this.commandHistory[this.historyIndex]
+              break
+            default:
+              break
+          }
+        },
+        handleRun (taskName, input) {
+          if (!this.taskList[taskName] || !this.taskList[taskName][taskName]) return Promise.resolve()
+          this.lastLineContent = '...'
+          return this.taskList[taskName][taskName](this.pushToList, input).then(done => {
+            this.pushToList(done)
+            this.lastLineContent = '&nbsp'
+          }).catch(error => {
+            this.pushToList(error || { type: 'error', label: 'Error', message: 'Something went wrong!' })
+            this.lastLineContent = '&nbsp'
+          })
+        },
+        pushToList (message) {
+          this.messageList.push(message)
+          this.autoScroll()
+        },
+        clearList () {
+          this.messageList = []
+          this.autoScroll()
+        },
+        printHelp (input) {
+          if (!input) {
+            this.pushToList({ message: this.$i18n.t('home.terminal.supportedCommands') })
+            this.supportingCommandList.map(command => {
+              if (this.commandList[command]) {
+                this.pushToList({ type: 'success', label: command, message: '---> ' + this.commandList[command].description })
+              } else {
+                this.pushToList({ type: 'success', label: command, message: '---> ' + this.taskList[command].description })
+              }
+              return undefined
+            })
+            this.pushToList({ message: this.$i18n.t('home.terminal.helpCommand') })
+          } else {
+            const command = this.commandList[input] || this.taskList[input]
+            this.pushToList({ message: command.description })
+          }
+          this.autoScroll()
+        },
+        time () {
+          return new Date().toLocaleTimeString().split('').splice(2).join('')
+        },
+        autoScroll () {
+          window.scrollTo(0, this.$refs.terminalLastLine.offsetTop)
+          const that = this
+          setTimeout(() => {
+            that.handleFocus()
+          }, 500)
+        }
+      }
+    }
 </script>
 
 <style scoped lang="scss">
@@ -240,16 +247,16 @@
     .vue-terminal .terminal-window {
         overflow:hidden;
         z-index:1;
-        font: 1.3rem Inconsolata, monospace;
+        font: 1rem Inconsolata, monospace;
         color: #4CAF50;
         pre {
-            font: 1.3rem Inconsolata, monospace;
+            font: 1rem Inconsolata, monospace;
             white-space: pre-wrap;
         }
         p {
             overflow-wrap: break-word;
             word-break: break-all;
-            font-size: 1.3rem;
+            font-size: 1rem;
             .cmd {
                 line-height: 24px;
             }

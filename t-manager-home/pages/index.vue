@@ -6,17 +6,22 @@
         {{prompt}} ./bin/execute txomins
       </span>
 
-      <div class="ascii-box">
-          <span class="green--text">
+      <div class="ascii-box" v-if="isSMAndUp">
+          <span class="yellow--text">
   _____                     _                          _
  |_   _|_  _____  _ __ ___ (_)_ __  ___  __      _____| |__  _ __   __ _  __ _  ___
    | | \ \/ / _ \| '_ ` _ \| | '_ \/ __| \ \ /\ / / _ \ '_ \| '_ \ / _` |/ _` |/ _ \
    | |  >  < (_) | | | | | | | | | \__ \  \ V  V /  __/ |_) | |_) | (_| | (_| |  __/
    |_| /_/\_\___/|_| |_| |_|_|_| |_|___/   \_/\_/ \___|_.__/| .__/ \__,_|\__, |\___|
                                                             |_|          |___/
-                                                                                   v1.0.1
-                                                                                   By Txomin
+<span class="green--text">
+v1.0.1
+By Txomin
+</span>
           </span>
+      </div>
+      <div class="yellow--text" v-else>
+          <h1>TXOMINS PAGE</h1>
       </div>
 
       <client-only>
@@ -63,7 +68,7 @@
             <span class="green--text">
               <v-container>
                 <v-row>
-                  <v-col cols="12" sm="3">
+                  <v-col cols="12" sm="3" v-if="isSMAndUp">
      !
      ^
     / \
@@ -83,7 +88,7 @@
      .
                   </v-col>
                   <v-col cols="12" sm="9">
-                    <h2>{{$t('home.projectMotivation')}}</h2>
+                    <h2 class="yellow--text">{{$t('home.projectMotivation')}}</h2>
                     <div v-html="$t('home.projectMotivation.description')"></div>
                   </v-col>
                 </v-row>
@@ -98,7 +103,7 @@
             <v-container>
               <v-row>
                 <v-col class="text-center">
-                  <h2>{{$t('home.projectFeatures')}}</h2>
+                  <h2 class="yellow--text">{{$t('home.projectFeatures')}}</h2>
                 </v-col>
               </v-row>
               <v-row>
@@ -132,19 +137,41 @@
             <v-container>
               <v-row>
                 <v-col class="text-center">
-                  <h2>{{$t('home.pricingPlans')}}</h2>
+                  <h2 class="yellow--text">{{$t('home.pricingPlans')}}</h2>
                   <p v-html="$t('home.pricingPlans.description')"></p>
                 </v-col>
               </v-row>
               <v-row>
                 <v-col cols="12">
-                  <AppPrices :title="$t('home.pricingPlans.reinforcement')" price="10€/h" :description="$t('home.pricingPlans.reinforcement.sub')" :items="['asdfsdfsd', 'fasdfasdf']"/>
+                  <AppPrices :title="$t('home.pricingPlans.reinforcement')" price="10€/h" :description="$t('home.pricingPlans.reinforcement.sub')" :items="prices.reinforcement"/>
                 </v-col>
                 <v-col cols="12">
-                  <AppPrices :title="$t('home.pricingPlans.web')" price="500€" :description="$t('home.pricingPlans.web.sub')" :items="['asdfsdfsd', 'fasdfasdf', 'fasdfasdf']"/>
+                  <AppPrices :title="$t('home.pricingPlans.web')" price="500€" :description="$t('home.pricingPlans.web.sub')" :items="prices.web"/>
                 </v-col>
                 <v-col cols="12">
-                  <AppPrices :title="$t('home.pricingPlans.poc')" price="1000€" :description="$t('home.pricingPlans.poc.sub')" :items="['asdfsdfsd', 'fasdfasdf']"/>
+                  <AppPrices :title="$t('home.pricingPlans.poc')" price="1000€" :description="$t('home.pricingPlans.poc.sub')" :items="prices.poc"/>
+                </v-col>
+                <v-col cols="12" v-if="isSMAndUp">
+                           .       .                   .       .      .     .      .
+                          .    .         .    .            .     ______
+                      .           .             .               ////////
+                                .    .   ________   .  .      /////////     .    .
+                           .            |.____.  /\        ./////////    .
+                    .                 .//      \/  |\     /////////
+                       .       .    .//          \ |  \ /////////       .     .   .
+                                    ||.    .    .| |  ///////// .     .
+                     .    .         ||           | |//`,/////                .
+                             .       \\        ./ //  /  \/   .
+                  .                    \\.___./ //\` '   ,_\     .     .
+                          .           .     \ //////\ , /   \                 .    .
+                                       .    ///////// \|  '  |    .
+                      .        .          ///////// .   \ _ /          .
+                                        /////////                              .
+                                 .   ./////////     .     .
+                         .           --------   .                  ..             .
+                  .               .        .         .                       .
+                                        ________________________
+                ____________------------                        -------------_________
                 </v-col>
               </v-row>
             </v-container>
@@ -158,9 +185,9 @@
             <v-container>
               <v-row>
                 <v-col cols="12" class="text-center">
-                  <h2>{{$t('home.me')}}</h2>
+                  <h2 class="yellow--text">{{$t('home.me')}}</h2>
                 </v-col>
-                <v-col cols="12" class="text-center">
+                <v-col cols="12" class="text-center" v-if="isSMAndUp">
        _.---._    /\\
     ./'       "--`\//
   ./              o \
@@ -184,7 +211,7 @@
     import colors from 'vuetify/es5/util/colors'
     import AppPrices from '../components/AppPrices'
     import AppProjectSpecs from '../components/AppProjectSpecs'
-    import AppVueTerminal from "../components/AppVueTerminal";
+    import AppVueTerminal from '../components/AppVueTerminal'
 
 export default {
       components: {
@@ -196,29 +223,43 @@ export default {
         return {
           isSMAndUp: true,
           appColors: colors,
-          titleTexts: [
-            '--Hi this is Txomins webpage',
-                  '--Try typing "help" to see the commands and tasks available',
-                  '--type "clear" if the console gets too busy'
-          ],
           previousCommands: [],
-          prompt: "guest@example.com:~$",
+          prompt: 'guest@example.com:~$',
+          prices: {
+            reinforcement: [
+              this.$i18n.t('home.pricingPlans.reinforcement.item1'),
+              this.$i18n.t('home.pricingPlans.reinforcement.item2'),
+              this.$i18n.t('home.pricingPlans.reinforcement.item3'),
+              this.$i18n.t('home.pricingPlans.reinforcement.item4')
+            ],
+            web: [
+              this.$i18n.t('home.pricingPlans.web.item1'),
+              this.$i18n.t('home.pricingPlans.web.item2'),
+              this.$i18n.t('home.pricingPlans.web.item3')
+            ],
+            poc: [
+              this.$i18n.t('home.pricingPlans.poc.item1'),
+              this.$i18n.t('home.pricingPlans.poc.item2'),
+              this.$i18n.t('home.pricingPlans.poc.item3')
+            ]
+          },
           taskList: {
-            cd: {
-              description:'--Show details: *about *features *prices *txomin',
-              cd: (pushToList, input) => {
+            cat: {
+              description: this.$i18n.t('home.terminal.cat'),
+              cat: (pushToList, input) => {
                 const p = new Promise((resolve, reject) => {
                   const url = input.split(' ')[1]
 
                   if (!url) {
-                    reject({ type: 'error', label: 'Error', message: '--A details is required!' })
+                    // eslint-disable-next-line prefer-promise-reject-errors
+                    reject({ type: 'error', label: this.$i18n.t('home.terminal.error'), message: this.$i18n.t('home.terminal.optionRequired') })
                     return
                   }
 
                   pushToList(
                     {
                       message: {
-                        list : [
+                        list: [
                           {
                             message: this.$refs[url].innerHTML,
                             html: true
@@ -228,20 +269,20 @@ export default {
                     }
                   )
 
-                  resolve({ type: 'success', label: 'Done', message: '--Section Opened!' })
+                  resolve({ type: 'success', label: this.$i18n.t('home.terminal.done'), message: this.$i18n.t('home.terminal.sectionOpened') })
                 })
 
-                return p;
+                return p
               }
             }
           },
           commandList: {
-            links:{
-              description:'--Links',
-              messages:[
-                { message: '--Email: txomin.sirera@gmail.com' },
-                { message: '--Github: https://github.com/txomin55' },
-                { message: '--LinkedIn: https://www.linkedin.com/in/txominsirera/' }
+            links: {
+              description: this.$i18n.t('home.terminal.links'),
+              messages: [
+                { message: 'Email: <b>txomin.sirera@gmail.com</b>', html: true },
+                { message: '<b><a href="https://www.github.com/txomin55">Github</a></b>', html: true },
+                { message: '<b><a href="https://www.linkedin.com/in/txominsirera/">LinkedIn</a></b>', html: true }
               ]
             }
           }
@@ -249,33 +290,41 @@ export default {
       },
       methods: {
         onComplete (index) {
-          if(this.previousCommands.indexOf(index) === -1) {
+          if (this.previousCommands.indexOf(index) === -1) {
             this.previousCommands.push(index)
           }
         },
         previousCommandEntered (index) {
-          if(index === 0){
+          if (index === 0) {
             return true
           }
 
-          return this.previousCommands.indexOf(index-1) !== -1
+          return this.previousCommands.indexOf(index - 1) !== -1
         }
       },
       computed: {
+        titleTexts () {
+          return [
+            this.$i18n.t('home.terminal.welcome'),
+            this.$i18n.t('home.terminal.aim'),
+            this.$i18n.t('home.terminal.help'),
+            this.$i18n.t('home.terminal.clear')
+          ]
+        },
         smAndUp () {
           return this.$vuetify.breakpoint.smAndUp
         },
-        lastCommandEntered(){
+        lastCommandEntered () {
           return this.previousCommands.length === this.titleTexts.length
         },
-        unknownCommandMessage(){
+        unknownCommandMessage () {
           const date = new Date()
 
           return {
             time: `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`,
             type: 'error',
-            label: '--Error',
-            message: '--That command is not recognized!'
+            label: this.$i18n.t('home.terminal.error'),
+            message: this.$i18n.t('home.terminal.commandNotRecognized')
           }
         }
       },
@@ -286,6 +335,7 @@ export default {
       },
       mounted () {
         this.isSMAndUp = this.$vuetify.breakpoint.smAndUp
+        this.prompt = this.isSMAndUp ? 'guest@example.com:~$' : 'guest:~$'
       }
     }
 </script>
@@ -300,7 +350,7 @@ export default {
     overflow: hidden;
     padding: 2rem;
     color: white;
-    font: 1.3rem Inconsolata, monospace;
+    font: 1rem Inconsolata, monospace;
     text-shadow: 0 0 5px #C8C8C8;
   }
   .header_background::after{

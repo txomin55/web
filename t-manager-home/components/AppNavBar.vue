@@ -9,6 +9,7 @@
         >
 
               <v-toolbar-title>{{$t('tManager')}}</v-toolbar-title>
+
               <v-spacer></v-spacer>
 
               <template v-if="isSMAndUp">
@@ -44,17 +45,18 @@
             </template>
 
             <template v-else>
-                <v-app-bar-nav-icon @click="drawer = !drawer"> </v-app-bar-nav-icon>
+                <v-app-bar-nav-icon class="green--text" @click="showDrawer = !showDrawer"> </v-app-bar-nav-icon>
             </template>
 
         </v-app-bar>
 
         <v-navigation-drawer
-                v-if="!isSMAndUp"
                 :value="showDrawer"
                 app
                 elevation="0"
                 class="green--text"
+                :color="appColors.black"
+                dark
         >
             <v-row v-for="(item, i) in items" :key="i">
                 <v-col cols="12">
@@ -110,7 +112,6 @@ export default {
       appColors: colors,
       selectedLanguage: 'es',
       languages: [{ flag: 'es', id: 'es' }, { flag: 'gb', id: 'en' }],
-      drawer: false,
       items: [
         { icon: 'apps', title: 'home', to: 'index' },
         { icon: 'bubble_chart', title: 'project', to: 'project' }
@@ -132,7 +133,6 @@ export default {
   },
   mounted () {
     this.isSMAndUp = this.$vuetify.breakpoint.smAndUp
-    this.showDrawer = this.drawer && !this.isSMAndUp
   }
 }
 </script>
