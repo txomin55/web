@@ -225,27 +225,9 @@ export default {
           appColors: colors,
           previousCommands: [],
           prompt: 'guest@example.com:~$',
-          prices: {
-            reinforcement: [
-              this.$i18n.t('home.pricingPlans.reinforcement.item1'),
-              this.$i18n.t('home.pricingPlans.reinforcement.item2'),
-              this.$i18n.t('home.pricingPlans.reinforcement.item3'),
-              this.$i18n.t('home.pricingPlans.reinforcement.item4')
-            ],
-            web: [
-              this.$i18n.t('home.pricingPlans.web.item1'),
-              this.$i18n.t('home.pricingPlans.web.item2'),
-              this.$i18n.t('home.pricingPlans.web.item3')
-            ],
-            poc: [
-              this.$i18n.t('home.pricingPlans.poc.item1'),
-              this.$i18n.t('home.pricingPlans.poc.item2'),
-              this.$i18n.t('home.pricingPlans.poc.item3')
-            ]
-          },
           taskList: {
             cat: {
-              description: this.$i18n.t('home.terminal.cat'),
+              description: this.catDescription,
               cat: (pushToList, input) => {
                 const p = new Promise((resolve, reject) => {
                   const url = input.split(' ')[1]
@@ -278,7 +260,7 @@ export default {
           },
           commandList: {
             links: {
-              description: this.$i18n.t('home.terminal.links'),
+              description: this.linksDescription,
               messages: [
                 { message: 'Email: <b>txomin.sirera@gmail.com</b>', html: true },
                 { message: '<b><a href="https://www.github.com/txomin55">Github</a></b>', html: true },
@@ -303,6 +285,32 @@ export default {
         }
       },
       computed: {
+        linksDescription () {
+          return this.$i18n.t('home.terminal.links')
+        },
+        catDescription () {
+          return this.$i18n.t('home.terminal.cat')
+        },
+        prices () {
+          return {
+            reinforcement: [
+              this.$i18n.t('home.pricingPlans.reinforcement.item1'),
+              this.$i18n.t('home.pricingPlans.reinforcement.item2'),
+              this.$i18n.t('home.pricingPlans.reinforcement.item3'),
+              this.$i18n.t('home.pricingPlans.reinforcement.item4')
+            ],
+            web: [
+              this.$i18n.t('home.pricingPlans.web.item1'),
+              this.$i18n.t('home.pricingPlans.web.item2'),
+              this.$i18n.t('home.pricingPlans.web.item3')
+            ],
+            poc: [
+              this.$i18n.t('home.pricingPlans.poc.item1'),
+              this.$i18n.t('home.pricingPlans.poc.item2'),
+              this.$i18n.t('home.pricingPlans.poc.item3')
+            ]
+          }
+        },
         titleTexts () {
           return [
             this.$i18n.t('home.terminal.welcome'),

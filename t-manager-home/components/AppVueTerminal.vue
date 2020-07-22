@@ -152,7 +152,7 @@
             this.pushToList({ message: `$ \\${this.title} ${this.inputCommand} ` })
           }
           if (!this.inputCommand) return
-          const commandArr = this.inputCommand.split(' ')
+          const commandArr = this.inputCommand.toLowerCase().split(' ')
           if (commandArr[0] === 'help') {
             this.printHelp(commandArr[1])
           } else if (commandArr[0] === 'clear') {

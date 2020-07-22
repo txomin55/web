@@ -2,6 +2,7 @@
     <div class="header_background">
       <v-container>
           <h2 class="yellow--text">T-MANAGER MODULE</h2>
+          <p><a href="https://github.com/txomin55/t-manager-module">Github link</a></p>
           <v-row>
               <v-col>
                   <v-sheet
