@@ -227,7 +227,7 @@ export default {
           prompt: 'guest@example.com:~$',
           taskList: {
             cat: {
-              description: this.catDescription,
+              description: () => this.catDescription,
               cat: (pushToList, input) => {
                 const p = new Promise((resolve, reject) => {
                   const url = input.split(' ')[1]
@@ -260,7 +260,7 @@ export default {
           },
           commandList: {
             links: {
-              description: this.linksDescription,
+              description: () => this.linksDescription,
               messages: [
                 { message: 'Email: <b>txomin.sirera@gmail.com</b>', html: true },
                 { message: '<b><a href="https://www.github.com/txomin55">Github</a></b>', html: true },
@@ -345,7 +345,7 @@ export default {
         this.isSMAndUp = this.$vuetify.breakpoint.smAndUp
         this.prompt = this.isSMAndUp ? 'guest@example.com:~$' : 'guest:~$'
       }
-    }
+}
 </script>
 <style>
   .header_background{

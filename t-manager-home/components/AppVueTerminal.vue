@@ -211,9 +211,11 @@
             this.pushToList({ message: this.$i18n.t('home.terminal.supportedCommands') })
             this.supportingCommandList.map(command => {
               if (this.commandList[command]) {
-                this.pushToList({ type: 'success', label: command, message: '---> ' + this.commandList[command].description })
+                const value = typeof this.commandList[command].description === 'function' ? this.commandList[command].description() : this.commandList[command].description
+                this.pushToList({ type: 'success', label: command, message: '---> ' + value })
               } else {
-                this.pushToList({ type: 'success', label: command, message: '---> ' + this.taskList[command].description })
+                const value = typeof this.taskList[command].description === 'function' ? this.taskList[command].description() : this.taskList[command].description
+                this.pushToList({ type: 'success', label: command, message: '---> ' + value })
               }
               return undefined
             })
