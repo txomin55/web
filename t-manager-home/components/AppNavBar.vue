@@ -22,7 +22,10 @@
                     {{$t(item.title)}}
                   </v-btn>
 
-                <v-menu offset-y>
+                <v-menu
+                    dark
+                    offset-y
+                >
                     <template v-slot:activator="{ on }">
                         <v-btn
                                 text

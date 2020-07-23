@@ -152,7 +152,8 @@
             this.pushToList({ message: `$ \\${this.title} ${this.inputCommand} ` })
           }
           if (!this.inputCommand) return
-          const commandArr = this.inputCommand.toLowerCase().split(' ')
+          this.inputCommand = this.inputCommand.toLowerCase()
+          const commandArr = this.inputCommand.split(' ')
           if (commandArr[0] === 'help') {
             this.printHelp(commandArr[1])
           } else if (commandArr[0] === 'clear') {
@@ -211,11 +212,13 @@
             this.pushToList({ message: this.$i18n.t('home.terminal.supportedCommands') })
             this.supportingCommandList.map(command => {
               if (this.commandList[command]) {
-                const value = typeof this.commandList[command].description === 'function' ? this.commandList[command].description() : this.commandList[command].description
-                this.pushToList({ type: 'success', label: command, message: '---> ' + value })
+                const isFunction = typeof this.commandList[command].description === 'function'
+                const value = isFunction ? this.commandList[command].description() : this.commandList[command].description
+                this.pushToList({ type: 'success', label: command, message: '---> ' + value, html: isFunction })
               } else {
-                const value = typeof this.taskList[command].description === 'function' ? this.taskList[command].description() : this.taskList[command].description
-                this.pushToList({ type: 'success', label: command, message: '---> ' + value })
+                const isFunction = typeof this.taskList[command].description === 'function'
+                const value = isFunction ? this.taskList[command].description() : this.taskList[command].description
+                this.pushToList({ type: 'success', label: command, message: '---> ' + value, html: isFunction })
               }
               return undefined
             })
@@ -239,6 +242,11 @@
       }
     }
 </script>
+<style>
+    .command-description{
+        margin-left: 5em;
+    }
+</style>
 
 <style scoped lang="scss">
     .vue-terminal {

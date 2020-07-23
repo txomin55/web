@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dashed-border">
     <h2>{{$t(title)}}</h2>
     <p v-html="$t(text)"></p>
   </div>
@@ -19,3 +19,11 @@
       }
     }
 </script>
+<style scoped>
+  .dashed-border{
+    padding: 1em;
+    border-width: 5px;
+    border-style: dashed;
+    height: 100%;
+  }
+</style>

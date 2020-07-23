@@ -36,8 +36,8 @@ By Txomin
                     :repeat=0
                     :shuffle='true'
                     initial-action='typing'
-                    :pre-type-delay='1000'
-                    :type-delay='50'
+                    :pre-type-delay='500'
+                    :type-delay='40'
                     erase-style='select-all'
                     caret-animation='blink'
                     @completed="onComplete(i)"
@@ -142,13 +142,13 @@ By Txomin
                 </v-col>
               </v-row>
               <v-row>
-                <v-col cols="12">
+                <v-col cols="12" sm="4">
                   <AppPrices :title="$t('home.pricingPlans.reinforcement')" price="10€/h" :description="$t('home.pricingPlans.reinforcement.sub')" :items="prices.reinforcement"/>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="12" sm="4">
                   <AppPrices :title="$t('home.pricingPlans.web')" price="500€" :description="$t('home.pricingPlans.web.sub')" :items="prices.web"/>
                 </v-col>
-                <v-col cols="12">
+                <v-col cols="12" sm="4">
                   <AppPrices :title="$t('home.pricingPlans.poc')" price="1000€" :description="$t('home.pricingPlans.poc.sub')" :items="prices.poc"/>
                 </v-col>
                 <v-col cols="12" v-if="isSMAndUp">
@@ -259,10 +259,10 @@ export default {
             }
           },
           commandList: {
-            links: {
+            contact: {
               description: () => this.linksDescription,
               messages: [
-                { message: 'Email: <b>txomin.sirera@gmail.com</b>', html: true },
+                { message: '<b>txomin.sirera@gmail.com</b>', html: true },
                 { message: '<b><a href="https://www.github.com/txomin55">Github</a></b>', html: true },
                 { message: '<b><a href="https://www.linkedin.com/in/txominsirera/">LinkedIn</a></b>', html: true }
               ]
@@ -302,12 +302,14 @@ export default {
             web: [
               this.$i18n.t('home.pricingPlans.web.item1'),
               this.$i18n.t('home.pricingPlans.web.item2'),
-              this.$i18n.t('home.pricingPlans.web.item3')
+              this.$i18n.t('home.pricingPlans.web.item3'),
+              this.$i18n.t('home.pricingPlans.web.item4')
             ],
             poc: [
               this.$i18n.t('home.pricingPlans.poc.item1'),
               this.$i18n.t('home.pricingPlans.poc.item2'),
-              this.$i18n.t('home.pricingPlans.poc.item3')
+              this.$i18n.t('home.pricingPlans.poc.item3'),
+              this.$i18n.t('home.pricingPlans.poc.item4')
             ]
           }
         },
