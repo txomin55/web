@@ -15,8 +15,8 @@
 </template>
 
 <script>
-    import AppNavBar from '@/components/AppNavBar'
-    import AppFooter from '@/components/AppFooter'
+    import AppNavBar from '../components/navbar/AppNavBar'
+    import AppFooter from '../components/footer/AppFooter'
 
 export default {
   components: {

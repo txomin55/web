@@ -117,7 +117,8 @@ export default {
       languages: [{ flag: 'es', id: 'es' }, { flag: 'gb', id: 'en' }],
       items: [
         { icon: 'apps', title: 'home', to: 'index' },
-        { icon: 'bubble_chart', title: 'project', to: 'project' }
+        { icon: 'bubble_chart', title: 'project', to: 'project' },
+        { icon: 'bubble_chart', title: 'game', to: 'game' }
       ],
       isSMAndUp: true,
       showDrawer: false

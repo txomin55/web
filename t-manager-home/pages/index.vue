@@ -209,9 +209,9 @@ By Txomin
 </template>
 <script>
     import colors from 'vuetify/es5/util/colors'
-    import AppPrices from '../components/AppPrices'
-    import AppProjectSpecs from '../components/AppProjectSpecs'
-    import AppVueTerminal from '../components/AppVueTerminal'
+    import AppPrices from '../components/prices/AppPrices'
+    import AppProjectSpecs from '../components/projectspects/AppProjectSpecs'
+    import AppVueTerminal from '../components/terminal/AppVueTerminal'
 
 export default {
       components: {
