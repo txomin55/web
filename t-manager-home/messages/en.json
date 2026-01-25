@@ -9,7 +9,7 @@
     "home.terminal.error" : "Error",
     "home.terminal.commandNotRecognized" : "That command is not recognized!",
     "home.terminal.optionRequired" : "Option is required!",
-    "home.terminal.cat" : "Show details, usage: cat route <div class='command-description'><p>Options:</p><p>*route -> about features prices txomin</p></div>",
+    "home.terminal.cat" : "Show details, usage: cat route <div class='command-description'><p>Options:</p><p>*route -> about prices txomin</p></div>",
     "home.terminal.sectionOpened" : "Section opened",
     "home.terminal.supportedCommands" : "Here is a list of supporting command",
     "home.terminal.helpCommand" : "Enter help <command> to get help for a particular command",
