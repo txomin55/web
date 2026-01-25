@@ -97,40 +97,6 @@ By Txomin
       </div>
     </div>
 
-      <div style="display:none">
-        <div class="ascii-box" ref="features">
-          <span class="green--text">
-            <v-container>
-              <v-row>
-                <v-col class="text-center">
-                  <h2 class="yellow--text">{{$t('home.projectFeatures')}}</h2>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="12" sm="6">
-                  <AppProjectSpecs title="home.projectFeatures.architecture" text="home.projectFeatures.architecture.sub"/>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <AppProjectSpecs title="home.projectFeatures.internationalization" text="home.projectFeatures.internationalization.sub"/>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <AppProjectSpecs title="home.projectFeatures.exceptionHandling" text="home.projectFeatures.exceptionHandling.sub"/>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <AppProjectSpecs title="home.projectFeatures.authentication" text="home.projectFeatures.authentication.sub"/>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <AppProjectSpecs title="home.projectFeatures.security" text="home.projectFeatures.security.sub"/>
-                </v-col>
-                <v-col cols="12" sm="6">
-                  <AppProjectSpecs title="home.projectFeatures.documentation" text="home.projectFeatures.documentation.sub"/>
-                </v-col>
-              </v-row>
-            </v-container>
-          </span>
-        </div>
-      </div>
-
     <div style="display:none">
       <div class="ascii-box" ref="prices">
           <span class="green--text">
@@ -223,7 +189,7 @@ export default {
         return {
           isSMAndUp: true,
           appColors: colors,
-          previousCommands: [],
+          : [],
           prompt: 'guest@example.com:~$',
           taskList: {
             cat: {
