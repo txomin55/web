@@ -1,7 +1,7 @@
 <template>
 
   <v-app>
-    <span id="forkongithub"><a href="https://github.com/txomin55/t-manager-module">Fork me on GitHub</a></span>
+    <span id="forkongithub"><a href="https://github.com/txomin55">Check me on GitHub</a></span>
     <app-nav-bar />
 
     <v-main>
