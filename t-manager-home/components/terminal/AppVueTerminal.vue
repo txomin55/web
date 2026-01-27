@@ -34,6 +34,7 @@
                       </li>
                     </ul>
                 </span>
+                </p>
 
                 <p v-if="actionResult"> <span class="cmd">{{actionResult}}</span></p>
 
@@ -47,7 +48,7 @@
                     <input
                             v-model="inputCommand"
                             :disabled="lastLineContent!=='&nbsp'"
-                            autofocus="true"
+                            autofocus
                             type="text"
                             @keyup="handleCommand($event)"
                             ref="inputBox"

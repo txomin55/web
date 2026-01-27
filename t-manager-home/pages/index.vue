@@ -109,10 +109,10 @@ By Txomin
               </v-row>
               <v-row>
                 <v-col cols="12" sm="4">
-                  <AppPrices :title="$t('home.pricingPlans.reinforcement')" price="10€/h" :description="$t('home.pricingPlans.reinforcement.sub')" :items="prices.reinforcement"/>
+                  <AppPrices :title="$t('home.pricingPlans.reinforcement')" price="60€/h" :description="$t('home.pricingPlans.reinforcement.sub')" :items="prices.reinforcement"/>
                 </v-col>
                 <v-col cols="12" sm="4">
-                  <AppPrices :title="$t('home.pricingPlans.web')" price="500€" :description="$t('home.pricingPlans.web.sub')" :items="prices.web"/>
+                  <AppPrices :title="$t('home.pricingPlans.web')" price="700€" :description="$t('home.pricingPlans.web.sub')" :items="prices.web"/>
                 </v-col>
                 <v-col cols="12" sm="4">
                   <AppPrices :title="$t('home.pricingPlans.poc')" price="1000€" :description="$t('home.pricingPlans.poc.sub')" :items="prices.poc"/>
@@ -187,7 +187,7 @@ export default {
         return {
           isSMAndUp: true,
           appColors: colors,
-          : [],
+          previousCommands: [],
           prompt: 'guest@example.com:~$',
           taskList: {
             cat: {

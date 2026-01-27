@@ -1,6 +1,8 @@
 const copydir = require('copy-dir');
+const fs = require('fs');
 
 copydir.sync('dist', '../');
 copydir.sync('dist/_nuxt', '../_nuxt');
-copydir.sync('dist/images', '../images');
-copydir.sync('dist/project', '../project');
+if (fs.existsSync('dist/project')) {
+  copydir.sync('dist/project', '../project');
+}

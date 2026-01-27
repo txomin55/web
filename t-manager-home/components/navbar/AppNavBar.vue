@@ -113,11 +113,10 @@ export default {
   data () {
     return {
       appColors: colors,
-      selectedLanguage: 'es',
+      selectedLanguage: 'en',
       languages: [{ flag: 'es', id: 'es' }, { flag: 'gb', id: 'en' }],
       items: [
-        { icon: 'apps', title: 'home', to: 'index' },
-        { icon: 'bubble_chart', title: 'game', to: 'game' }
+        { icon: 'apps', title: 'home', to: 'index' }
       ],
       isSMAndUp: true,
       showDrawer: false
